@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    box-sizing: border-box;
+}
+
+.my-container {
+    @apply lg:w-[80%] w-[95%] mx-auto
+}
+
+.my-btn-primary{
+    transition: all ease-out .4s;
+    @apply px-7 py-3 rounded-lg font-semibold uppercase mt-5 border-b-[3px] border-b-gray-800 block mx-auto border-[3px] border-transparent
+}
+
+.my-btn-primary:hover{
+    @apply bg-gray-800 text-white border-transparent
+}
