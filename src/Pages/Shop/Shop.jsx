@@ -17,12 +17,9 @@ const Shop = () => {
     console.log(categories.indexOf(category));
 
     useEffect(() => {
-        fetch('menu.json')
+        fetch(`http://localhost:5000/menu?category=${category}`)
             .then(res => res.json())
-            .then(data => {
-                const filterData = data.filter(item => item.category === category)
-                setMenu(filterData)
-            })
+            .then(data => setMenu(data))
     }, [category])
 
     const handleTabClick = (index, cate) => {

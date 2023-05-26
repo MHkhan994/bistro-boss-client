@@ -6,9 +6,9 @@ const PopularMenu = () => {
     const [menu, setMenu] = useState([])
 
     useEffect(() => {
-        fetch('menu.json')
+        fetch('http://localhost:5000/menu?category=popular')
             .then(res => res.json())
-            .then(data => setMenu(data.filter(item => item.category === 'popular')))
+            .then(data => setMenu(data))
     }, [])
 
     console.log(menu);
