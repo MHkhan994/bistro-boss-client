@@ -5,12 +5,11 @@ import Footer from '../Pages/Shared/Footer';
 
 const Main = () => {
     const currectPath = useLocation()
-    console.log(currectPath);
     return (
         <div>
-            {currectPath.pathname.includes('login') || <Navbar></Navbar>}
+            {currectPath.pathname.includes('login') || currectPath.pathname.includes('register') || <Navbar></Navbar>}
             <Outlet></Outlet>
-            {currectPath.pathname.includes('login') || <Footer></Footer>}
+            {currectPath.pathname.includes('login') || currectPath.pathname.includes('register') || <Footer></Footer>}
             <ScrollRestoration></ScrollRestoration>
         </div>
     );

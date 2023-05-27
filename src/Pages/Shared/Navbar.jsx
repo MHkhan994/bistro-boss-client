@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaBars, FaCartPlus } from 'react-icons/fa';
 import { HiOutlineX } from "react-icons/hi";
 import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../../Provider/AuthProvider';
 
 const Navbar = () => {
 
+    const { user, logOut } = useContext(AuthContext)
     const [isOpen, setIsOpen] = useState(false)
 
+
+    const handleLogOut = () => {
+        logOut()
+    }
 
     return (
         <div className='z-10'>
@@ -16,14 +22,20 @@ const Navbar = () => {
                         <h2 className='text-2xl font-bold'>BISTRO BOSS</h2>
                         <h3 className='text-xl tracking-[.4rem]'>Restaurant</h3>
                     </div>
-                    <ul className='flex uppercase gap-5 font-bold'>
+                    <ul className='flex uppercase gap-5 font-bold items-center'>
                         <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/'>Home</NavLink>
                         <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/contact'>Contact Us</NavLink>
                         <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/dashboard'>Dashboard</NavLink>
                         <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/menu'>Our Menu</NavLink>
                         <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/shop/salad'>Our Shop</NavLink>
                         <li><FaCartPlus className='text-green-600 text-2xl'></FaCartPlus></li>
-                        <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/login'>Sign In</NavLink>
+                        {
+                            user ? <div className='flex gap-4 items-center h-full'>
+                                <button className='uppercase' onClick={handleLogOut}>Log Out</button>
+                                <img className='h-10 w-10 rounded-full' src={user.photoURL} alt="" />
+                            </div> :
+                                <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/login'>Sign In</NavLink>
+                        }
                     </ul>
                 </div>
             </div>

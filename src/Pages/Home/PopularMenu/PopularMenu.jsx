@@ -11,7 +11,6 @@ const PopularMenu = () => {
             .then(data => setMenu(data))
     }, [])
 
-    console.log(menu);
 
     return (
         <div className='my-container'>
