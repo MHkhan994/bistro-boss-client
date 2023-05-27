@@ -1,14 +1,16 @@
 import React from 'react';
-import { Outlet, ScrollRestoration } from 'react-router-dom';
+import { Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
 import Navbar from '../Pages/Shared/Navbar';
 import Footer from '../Pages/Shared/Footer';
 
 const Main = () => {
+    const currectPath = useLocation()
+    console.log(currectPath);
     return (
         <div>
-            <Navbar></Navbar>
+            {currectPath.pathname.includes('login') || <Navbar></Navbar>}
             <Outlet></Outlet>
-            <Footer></Footer>
+            {currectPath.pathname.includes('login') || <Footer></Footer>}
             <ScrollRestoration></ScrollRestoration>
         </div>
     );

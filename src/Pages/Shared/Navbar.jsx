@@ -23,7 +23,7 @@ const Navbar = () => {
                         <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/menu'>Our Menu</NavLink>
                         <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/shop/salad'>Our Shop</NavLink>
                         <li><FaCartPlus className='text-green-600 text-2xl'></FaCartPlus></li>
-                        <button className='uppercase ms-3'>Sign out</button>
+                        <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/login'>Sign In</NavLink>
                     </ul>
                 </div>
             </div>
@@ -32,7 +32,7 @@ const Navbar = () => {
             <div className='lg:hidden flex bg-[#00000060] fixed z-50 text-white px-4 py-3 w-full'>
                 <div className='flex justify-between w-full'>
                     <FaBars className={isOpen ? 'text-transparent' : 'text-2xl cursor-pointer'} onClick={() => setIsOpen(true)}></FaBars>
-                    <button className='uppercase ms-3'>Sign out</button>
+                    <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/login'>Sign In</NavLink>
                     {
                         isOpen && <div className='bg-[#000000c0] w-[60%] rounded-lg px-4 py-3 absolute'>
                             <HiOutlineX className='text-3xl cursor-pointer ms-auto absolute right-3' onClick={() => setIsOpen(false)}></HiOutlineX>
