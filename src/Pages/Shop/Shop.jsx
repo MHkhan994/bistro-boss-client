@@ -64,7 +64,7 @@ const Shop = () => {
                     />
                 </ul>
             </div>
-            <div className='my-container grid lg:grid-cols-3 grid-cols-1 gap-3 pt-10'>
+            <div className='my-container grid lg:grid-cols-3 grid-cols-1 gap-4 pt-10'>
                 {
                     menu.map(item => <ShopCard key={item._id} item={item}></ShopCard>)
                 }

@@ -7,6 +7,7 @@ import { FaFacebookF, FaGithub, FaGoogle } from 'react-icons/fa';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../Provider/AuthProvider';
 import { Helmet } from 'react-helmet-async';
+import Swal from 'sweetalert2';
 
 const Login = () => {
     const [disabled, setDisabled] = useState(true)
@@ -24,10 +25,27 @@ const Login = () => {
     // gogole login
     const handleGoogleLogin = () => {
         googleLogIn()
-            .then(() => {
-                navigate(from)
+            .then(result => {
+
+                const user = { name: result.user.displayName, email: result.user.email }
+                fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.insertedId) {
+                            navigate(from, { replace: true })
+                        }
+                        else if (data.message) {
+                            navigate(from, { replace: true })
+                        }
+                    })
             })
-            .catch(error => console.log(error))
     }
 
     // password login
@@ -38,7 +56,9 @@ const Login = () => {
         const password = form.password.value;
         console.log(password, email);
         logIn(email, password)
-            .then(() => {
+            .then(result => {
+
+                Swal.fire(`Welcome back ${result.user.displayName}`)
                 navigate(from)
             })
             .catch(error => console.log(error))

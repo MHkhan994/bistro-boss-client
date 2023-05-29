@@ -1,14 +1,18 @@
 import React, { useContext } from 'react';
 import loginImg from '../../assets/others/authentication.png'
 import loginImg2 from '../../assets/others/authentication2.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaFacebookF, FaGithub, FaGoogle } from 'react-icons/fa';
 import { AuthContext } from '../../Provider/AuthProvider';
 import { updateProfile } from 'firebase/auth';
 import { Helmet } from 'react-helmet-async';
+import Swal from 'sweetalert2'
+
+
 const Register = () => {
 
     const { createUser } = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const handleSignUp = e => {
         e.preventDefault()
@@ -16,15 +20,34 @@ const Register = () => {
         const name = form.name.value;
         const email = form.email.value;
         const password = form.password.value;
+        const photo = form.photo.value;
         console.log(password);
 
         createUser(email, password)
             .then(result => {
                 updateProfile(result.user, {
-                    displayName: name
+                    displayName: name,
+                    photoURL: photo
                 })
-                console.log(result.user);
-                form.reset()
+                    .then(() => {
+                        const user = { name: result.user.displayName, email: result.user.email }
+                        fetch('http://localhost:5000/users', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(user)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data);
+                                if (data.insertedId) {
+                                    Swal.fire('account created successfully')
+                                    form.reset()
+                                    navigate('/login')
+                                }
+                            })
+                    })
             }
             )
             .catch(error => console.log(error))
@@ -53,6 +76,13 @@ const Register = () => {
                                 <span className="label-text">Email <span className='text-orange-500'>&#10034;</span></span>
                             </label>
                             <input type="email" name='email' placeholder="email" className="input shadow-inner" />
+                        </div>
+
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Photo <span className='text-orange-500'>&#10034;</span></span>
+                            </label>
+                            <input type="text" name='photo' placeholder="Photo Url" className="input shadow-inner" />
                         </div>
 
                         <div className="form-control">

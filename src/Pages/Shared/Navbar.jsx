@@ -3,12 +3,14 @@ import { FaBars, FaCartPlus } from 'react-icons/fa';
 import { HiOutlineX } from "react-icons/hi";
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../Provider/AuthProvider';
+import useCart from '../../Hooks/UseCart';
 
 const Navbar = () => {
 
     const { user, logOut } = useContext(AuthContext)
     const [isOpen, setIsOpen] = useState(false)
 
+    const [cart] = useCart()
 
     const handleLogOut = () => {
         logOut()
@@ -28,11 +30,13 @@ const Navbar = () => {
                         <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/dashboard'>Dashboard</NavLink>
                         <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/menu'>Our Menu</NavLink>
                         <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/shop/salad'>Our Shop</NavLink>
-                        <li><FaCartPlus className='text-green-600 text-2xl'></FaCartPlus></li>
+                        <NavLink to='/dashboard/cart' className='relative'><FaCartPlus className='text-green-600 text-2xl'></FaCartPlus>
+                            <p className='absolute -right-2 top-0 text-orange-400'><sup>{cart?.length}</sup></p>
+                        </NavLink>
                         {
                             user ? <div className='flex gap-4 items-center h-full'>
                                 <button className='uppercase' onClick={handleLogOut}>Log Out</button>
-                                <img className='h-10 w-10 rounded-full' src={user.photoURL} alt="" />
+                                <img className='w-10 h-10 rounded-full' src={user.photoURL} alt="" />
                             </div> :
                                 <NavLink className={({ isActive }) => isActive ? 'text-orange-500' : ''} to='/login'>Sign In</NavLink>
                         }

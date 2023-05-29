@@ -4,7 +4,26 @@
 
 *{
     box-sizing: border-box;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #BB8506;
 }
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: #f8e9c7;
+    border-radius: 5px;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: #D1A054;
+    border-radius: 14px;
+    border-left: 4px solid #D1A054;
+  }
 
 .my-container {
     @apply lg:w-[80%] w-[95%] mx-auto
@@ -17,4 +36,28 @@
 
 .my-btn-primary:hover{
     @apply bg-gray-800 text-white border-transparent
+}
+
+.dash-drawer{
+  height: auto !important;
+  max-height: fit-content !important;
+}
+
+.drawer-side a{
+  background: transparent !important;
+}
+
+.bg-primary{
+  @apply bg-[#D1A054]
+}
+
+.drawer-content{
+  height: auto !important;
+  max-height: fit-content !important;
+}
+
+
+/* mycart */
+.mycart-head{
+  @apply bg-[#D1A054]
 }
