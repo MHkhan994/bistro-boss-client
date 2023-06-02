@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuItem from '../Shared/MenuItem';
+import MenuItem from '../../Shared/MenuItem';
 import { Link } from 'react-router-dom';
 
 const MenuSection = ({ items, img, title, category }) => {

@@ -7,12 +7,15 @@ import { AuthContext } from '../../Provider/AuthProvider';
 import { updateProfile } from 'firebase/auth';
 import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2'
+import useAxiosSecure from '../../Hooks/UseAxionSecure';
 
 
 const Register = () => {
 
     const { createUser } = useContext(AuthContext)
     const navigate = useNavigate()
+
+    const [axiosSecure] = useAxiosSecure()
 
     const handleSignUp = e => {
         e.preventDefault()
@@ -40,7 +43,6 @@ const Register = () => {
                         })
                             .then(res => res.json())
                             .then(data => {
-                                console.log(data);
                                 if (data.insertedId) {
                                     Swal.fire('account created successfully')
                                     form.reset()

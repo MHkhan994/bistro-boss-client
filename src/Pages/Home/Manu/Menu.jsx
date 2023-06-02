@@ -1,35 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import SectionBanner from '../../Components/PageBanner';
 
 import MenuSection from './MenuSection';
-import SectionTop from '../../Components/SectionTop';
 
 
-import img from '../../assets/menu/banner3.jpg'
-import desert from '../../assets/menu/dessert-bg.jpeg'
-import pizza from '../../assets/menu/pizza-bg.jpg'
-import salad from '../../assets/menu/salad-bg.jpg'
-import soup from '../../assets/menu/soup-bg.jpg'
+import img from '../../../assets/menu/banner3.jpg'
+import desert from '../../../assets/menu/dessert-bg.jpeg'
+import pizza from '../../../assets/menu/pizza-bg.jpg'
+import salad from '../../../assets/menu/salad-bg.jpg'
+import soup from '../../../assets/menu/soup-bg.jpg'
+import useAxiosSecure from '../../../Hooks/UseAxionSecure';
+import SectionTop from '../../../Components/SectionTop';
+import PageBanner from '../../../Components/PageBanner';
 
 const Menu = () => {
     const [menu, setMenu] = useState([])
 
+    const [axiosSecure] = useAxiosSecure()
+
     useEffect(() => {
-        fetch('http://localhost:5000/menu')
-            .then(res => res.json())
-            .then(data => setMenu(data))
+        axiosSecure('http://localhost:5000/menu')
+            .then(res => setMenu(res.data))
     }, [])
     return (
         <div>
             <Helmet>
                 <title>Bistro Boss - Menu</title>
             </Helmet>
-            <SectionBanner
+            <PageBanner
                 img={img}
                 title={'Our Menu'}
             >
-            </SectionBanner>
+            </PageBanner>
 
             <div className='lg:mt-20 mt-12'>
                 <SectionTop
@@ -76,7 +78,7 @@ const Menu = () => {
                 img={soup}
                 category={'soup'}
             ></MenuSection>
-        </div>
+        </div >
     );
 };
 

@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '../../Provider/AuthProvider';
+import { AuthContext } from '../../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
 import { useLocation, useNavigate } from 'react-router-dom';
-import useCart from '../../Hooks/UseCart';
+import useCart from '../../../Hooks/UseCart';
+import useAxiosSecure from '../../../Hooks/UseAxionSecure';
 
 const ShopCard = ({ item }) => {
 
@@ -12,21 +13,22 @@ const ShopCard = ({ item }) => {
     const location = useLocation()
     const navigate = useNavigate()
 
+    const [axiosSecure] = useAxiosSecure()
+
     const handleAddtoCart = item => {
         if (user) {
             const checkItem = cart.find(i => i.itemId === _id)
             if (!checkItem) {
                 const cartItem = { itemId: _id, name, image, email: user.email, price }
-                fetch('http://localhost:5000/carts', {
+                axiosSecure('http://localhost:5000/carts', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
                     },
                     body: JSON.stringify(cartItem)
                 })
-                    .then(res => res.json())
                     .then(data => {
-                        if (data.insertedId) {
+                        if (data.data.insertedId) {
                             refetch()
                             Swal.fire({
                                 position: 'center',

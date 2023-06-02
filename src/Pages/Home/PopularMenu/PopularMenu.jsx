@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import SectionTop from '../../../Components/SectionTop';
 import MenuItem from '../../Shared/MenuItem';
+import useAxiosSecure from '../../../Hooks/UseAxionSecure';
 
 const PopularMenu = () => {
     const [menu, setMenu] = useState([])
 
+    const [axiosSecure] = useAxiosSecure()
+
     useEffect(() => {
-        fetch('http://localhost:5000/menu?category=popular')
-            .then(res => res.json())
-            .then(data => setMenu(data))
+        axiosSecure('/menu?category=popular')
+            .then(res => setMenu(res.data))
     }, [])
 
 

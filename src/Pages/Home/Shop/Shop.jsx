@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import PageBanner from '../../Components/PageBanner'
+import PageBanner from '../../../Components/PageBanner'
 
-import shopImg from '../../assets/shop/banner2.jpg'
+import shopImg from '../../../assets/shop/banner2.jpg'
 import Tab from './Tab';
 import ShopCard from './ShopCard';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import useAxiosSecure from '../../../Hooks/UseAxionSecure';
 
 
 const Shop = () => {
@@ -14,12 +15,12 @@ const Shop = () => {
     const [menu, setMenu] = useState([])
     const [category, setCategory] = useState(paramCategory || 'salad')
     const [activeTab, setActiveTab] = useState(categories.indexOf(category));
+    const [axiosSecure] = useAxiosSecure()
     console.log(categories.indexOf(category));
 
     useEffect(() => {
-        fetch(`http://localhost:5000/menu?category=${category}`)
-            .then(res => res.json())
-            .then(data => setMenu(data))
+        axiosSecure(`http://localhost:5000/menu?category=${category}`)
+            .then(res => setMenu(res.data))
     }, [category])
 
     const handleTabClick = (index, cate) => {
